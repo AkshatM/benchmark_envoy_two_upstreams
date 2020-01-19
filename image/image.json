@@ -1,0 +1,44 @@
+{
+  "variables": {
+    "do_token":""
+  },
+  "builders": [
+    {
+      "type": "digitalocean",
+      "ssh_username": "root",
+      "api_token": "{{ user `do_token` }}",
+      "image": "ubuntu-18-04-x64",
+      "region": "blr1",
+      "size": "s-8vcpu-32gb",
+      "snapshot_name": "benchmark_image",
+      "user_data_file": "bootstrap.sh"
+    }
+  ],
+  "provisioners": [
+     {
+  	"type": "file",
+  	"source": "configs/",
+	"destination": "/root/"
+     },
+     {
+  	"type": "file",
+  	"source": "upload.sh",
+	"destination": "/root/upload.sh"
+     },
+     {
+  	"type": "file",
+  	"source": "tcp_server.js",
+	"destination": "/root/"
+     },
+     {
+  	"type": "file",
+  	"source": "envoy_configs",
+	"destination": "/root/"
+     },
+     {
+  	"type": "file",
+  	"source": "header_profiles",
+	"destination": "/root/"
+     }
+  ]
+}
